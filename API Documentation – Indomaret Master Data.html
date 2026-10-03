@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<!-- saved from url=(0093)file:///C:/Users/p/Downloads/tes_indomaret/CalebDinoto_BackendDeveloper_APIDocumentation.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>API Documentation – Indomaret Master Data</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 13px;
+      color: #1a1a1a;
+      background: #fff;
+      padding: 40px 60px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    /* ── Cover ── */
+    .cover {
+      text-align: center;
+      padding: 48px 0 36px;
+      border-bottom: 3px solid #d32f2f;
+      margin-bottom: 40px;
+    }
+    .cover .logo { font-size: 28px; font-weight: 900; color: #d32f2f; letter-spacing: 1px; margin-bottom: 6px; }
+    .cover .doc-type { font-size: 12px; color: #888; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; }
+    .cover h1 { font-size: 22px; font-weight: 700; color: #1a1a1a; margin-bottom: 8px; }
+    .cover .subtitle { font-size: 13px; color: #555; }
+    .cover .meta { margin-top: 24px; font-size: 12px; color: #777; }
+
+    /* ── Headings ── */
+    h2 { font-size: 16px; font-weight: 700; color: #d32f2f; border-bottom: 2px solid #d32f2f; padding-bottom: 6px; margin: 36px 0 16px; }
+    h3 { font-size: 13px; font-weight: 700; color: #1a1a1a; margin: 22px 0 8px; }
+
+    p { line-height: 1.7; margin-bottom: 10px; color: #333; }
+    ul { margin: 6px 0 12px 20px; }
+    ul li { line-height: 1.9; }
+
+    /* ── Endpoint card ── */
+    .endpoint-card {
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      margin: 18px 0 28px;
+      overflow: hidden;
+    }
+    .endpoint-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 18px;
+      background: #fafafa;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .method {
+      font-size: 12px;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 4px;
+      letter-spacing: .5px;
+    }
+    .GET    { background: #e8f5e9; color: #2e7d32; }
+    .POST   { background: #e3f2fd; color: #1565c0; }
+    .PUT    { background: #fff8e1; color: #f57f17; }
+    .DELETE { background: #fce4e4; color: #c62828; }
+    .endpoint-path {
+      font-family: 'Consolas', monospace;
+      font-size: 14px;
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+    .endpoint-desc {
+      padding: 12px 18px 4px;
+      color: #444;
+      line-height: 1.7;
+    }
+    .endpoint-body { padding: 4px 18px 16px; }
+
+    /* ── Code block ── */
+    pre {
+      background: #1e1e1e;
+      color: #d4d4d4;
+      border-radius: 5px;
+      padding: 14px 16px;
+      font-family: 'Consolas', monospace;
+      font-size: 12px;
+      line-height: 1.6;
+      margin: 8px 0 14px;
+      overflow-x: auto;
+    }
+    pre .key   { color: #9cdcfe; }
+    pre .str   { color: #ce9178; }
+    pre .num   { color: #b5cea8; }
+    pre .bool  { color: #569cd6; }
+    pre .null  { color: #569cd6; }
+    pre .cmmt  { color: #6a9955; }
+
+    /* ── Inline code ── */
+    code {
+      background: #f5f5f5;
+      border: 1px solid #ddd;
+      border-radius: 3px;
+      padding: 1px 5px;
+      font-family: 'Consolas', monospace;
+      font-size: 12px;
+    }
+
+    /* ── Label ── */
+    .section-label {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #888;
+      margin: 14px 0 4px;
+    }
+
+    /* ── Table ── */
+    table { width: 100%; border-collapse: collapse; margin: 8px 0 14px; font-size: 12.5px; }
+    thead tr { background: #d32f2f; color: #fff; }
+    thead th { padding: 8px 12px; text-align: left; font-weight: 600; }
+    tbody tr:nth-child(odd)  { background: #fafafa; }
+    tbody tr:nth-child(even) { background: #fff; }
+    tbody td { padding: 7px 12px; border-bottom: 1px solid #eeeeee; }
+    .required { color: #d32f2f; font-weight: 700; }
+    .optional { color: #888; }
+
+    /* ── Summary table ── */
+    .summary-table { margin: 10px 0 20px; }
+    .summary-table td:first-child { font-family: 'Consolas', monospace; color: #d32f2f; white-space: nowrap; }
+
+    /* ── Info box ── */
+    .info-box {
+      background: #e8f5e9;
+      border-left: 4px solid #2e7d32;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin: 12px 0;
+      font-size: 12.5px;
+      line-height: 1.8;
+    }
+    .warn-box {
+      background: #fff8e1;
+      border-left: 4px solid #f9a825;
+      border-radius: 4px;
+      padding: 12px 16px;
+      margin: 12px 0;
+      font-size: 12.5px;
+      line-height: 1.8;
+    }
+
+    /* ── Footer ── */
+    .footer { margin-top: 48px; padding-top: 14px; border-top: 1px solid #ddd; font-size: 11px; color: #999; display: flex; justify-content: space-between; }
+
+    @media print {
+      body { padding: 20px 40px; }
+      .endpoint-card { page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="logo">Indomaret</div>
+  <div class="doc-type">Backend Developer Technical Assignment</div>
+  <h1>API Documentation</h1>
+  <div class="subtitle">Indomaret Master Data API — Province, Branch &amp; Store Management</div>
+  <div class="meta">
+    Prepared by: <strong>Caleb Dinoto</strong> &nbsp;|&nbsp;
+    Date: <strong>October 2026</strong> &nbsp;|&nbsp;
+    Base URL: <strong>http://localhost:8080</strong>
+  </div>
+</div>
+
+
+<!-- ═══════════════════ 1. OVERVIEW ═══════════════════ -->
+<h2>1. Overview</h2>
+<p>
+  This document describes all REST API endpoints for the Indomaret Master Data service.
+  The API manages provinces, branches, and stores data with support for soft-delete,
+  audit trails, and cross-province whitelist visibility.
+</p>
+<table>
+  <thead><tr><th>Property</th><th>Value</th></tr></thead>
+  <tbody>
+    <tr><td>Base URL</td><td><code>http://localhost:8080</code></td></tr>
+    <tr><td>Protocol</td><td>HTTP/1.1</td></tr>
+    <tr><td>Data Format</td><td>JSON (<code>Content-Type: application/json</code>)</td></tr>
+    <tr><td>Authentication</td><td>HTTP Basic Auth (username + password)</td></tr>
+    <tr><td>Framework</td><td>Spring Boot 4.1.1 / Java 17</td></tr>
+  </tbody>
+</table>
+
+
+<!-- ═══════════════════ 2. AUTHENTICATION ═══════════════════ -->
+<h2>2. Authentication</h2>
+<p>Every <code>/api/**</code> endpoint requires authentication. Unauthenticated requests receive <strong>HTTP 401 Unauthorized</strong>.</p>
+<p>Use <strong>HTTP Basic Authentication</strong>: include an <code>Authorization</code> header with the value <code>Basic &lt;base64(username:password)&gt;</code>.</p>
+
+<div class="info-box">
+  <strong>Default credentials (seeded by db_init.sql):</strong><br>
+  Username: <code>admin</code> &nbsp;&nbsp; Password: <code>password123</code><br><br>
+  <strong>curl example:</strong><br>
+  <code>curl -u admin:password123 http://localhost:8080/api/stores</code>
+</div>
+
+<div class="warn-box">
+  Passwords are stored as <strong>BCrypt hashes</strong> in the <code>users</code> table.
+  The system uses Spring Security with a custom <code>UserDetailsService</code> to validate
+  credentials against the database.
+</div>
+
+
+<!-- ═══════════════════ 3. STANDARD RESPONSE FORMAT ═══════════════════ -->
+<h2>3. Standard Response Format</h2>
+<p>All responses follow a consistent wrapper structure:</p>
+<pre>{
+  <span class="key">"status"</span>:  <span class="num">200</span>,          <span class="cmmt">// HTTP-like status code</span>
+  <span class="key">"message"</span>: <span class="str">"..."</span>,       <span class="cmmt">// Human-readable result message</span>
+  <span class="key">"data"</span>:    <span class="str">{ ... }</span>      <span class="cmmt">// Payload (object, array, or null)</span>
+}</pre>
+
+<table>
+  <thead><tr><th>HTTP Code</th><th>Meaning</th></tr></thead>
+  <tbody>
+    <tr><td><code>200</code></td><td>Success</td></tr>
+    <tr><td><code>401</code></td><td>Unauthorized — missing or invalid credentials</td></tr>
+    <tr><td><code>404</code></td><td>Resource not found (or already soft-deleted)</td></tr>
+    <tr><td><code>500</code></td><td>Internal server error (unexpected)</td></tr>
+  </tbody>
+</table>
+
+
+<!-- ═══════════════════ 4. ENDPOINT SUMMARY ═══════════════════ -->
+<h2>4. Endpoint Summary</h2>
+<table class="summary-table">
+  <thead><tr><th>Method</th><th>Path</th><th>Description</th></tr></thead>
+  <tbody>
+    <tr><td>GET</td><td>/api/provinces</td><td>List all active provinces</td></tr>
+    <tr><td>GET</td><td>/api/branches</td><td>List all active branches</td></tr>
+    <tr><td>PUT</td><td>/api/branches/{id}</td><td>Update a branch</td></tr>
+    <tr><td>DELETE</td><td>/api/branches/{id}</td><td>Soft-delete a branch</td></tr>
+    <tr><td>GET</td><td>/api/stores</td><td>Search stores (by province + whitelist)</td></tr>
+    <tr><td>PUT</td><td>/api/stores/{id}/whitelist</td><td>Toggle store whitelist status</td></tr>
+  </tbody>
+</table>
+
+
+<!-- ═══════════════════ 5. PROVINCE ENDPOINTS ═══════════════════ -->
+<h2>5. Province Endpoints</h2>
+
+<div class="endpoint-card">
+  <div class="endpoint-header">
+    <span class="method GET">GET</span>
+    <span class="endpoint-path">/api/provinces</span>
+  </div>
+  <div class="endpoint-desc">
+    Returns all provinces where <code>is_active = true</code> AND <code>is_deleted = false</code>.
+  </div>
+  <div class="endpoint-body">
+    <div class="section-label">Request Parameters</div>
+    <p>None</p>
+
+    <div class="section-label">Sample Response — 200 OK</div>
+    <pre>{
+  <span class="key">"status"</span>: <span class="num">200</span>,
+  <span class="key">"message"</span>: <span class="str">"Berhasil mengambil data provinsi"</span>,
+  <span class="key">"data"</span>: [
+    {
+      <span class="key">"id"</span>: <span class="num">1</span>,
+      <span class="key">"name"</span>: <span class="str">"DKI Jakarta"</span>,
+      <span class="key">"isActive"</span>: <span class="bool">true</span>,
+      <span class="key">"isDeleted"</span>: <span class="bool">false</span>,
+      <span class="key">"createdBy"</span>: <span class="str">"admin"</span>,
+      <span class="key">"createdAt"</span>: <span class="str">"2026-10-03T10:00:00"</span>,
+      <span class="key">"updatedBy"</span>: <span class="null">null</span>,
+      <span class="key">"updatedAt"</span>: <span class="str">"2026-10-03T10:00:00"</span>
+    },
+    <span class="cmmt">// ... 4 more provinces</span>
+  ]
+}</pre>
+  </div>
+</div>
+
+
+<!-- ═══════════════════ 6. BRANCH ENDPOINTS ═══════════════════ -->
+<h2>6. Branch Endpoints</h2>
+
+<!-- GET branches -->
+<div class="endpoint-card">
+  <div class="endpoint-header">
+    <span class="method GET">GET</span>
+    <span class="endpoint-path">/api/branches</span>
+  </div>
+  <div class="endpoint-desc">
+    Returns all branches where <code>is_active = true</code> AND <code>is_deleted = false</code>,
+    including the nested province object.
+  </div>
+  <div class="endpoint-body">
+    <div class="section-label">Request Parameters</div>
+    <p>None</p>
+
+    <div class="section-label">Sample Response — 200 OK</div>
+    <pre>{
+  <span class="key">"status"</span>: <span class="num">200</span>,
+  <span class="key">"message"</span>: <span class="str">"Berhasil mengambil data cabang"</span>,
+  <span class="key">"data"</span>: [
+    {
+      <span class="key">"id"</span>: <span class="num">1</span>,
+      <span class="key">"name"</span>: <span class="str">"Cabang Jakarta Pusat"</span>,
+      <span class="key">"isActive"</span>: <span class="bool">true</span>,
+      <span class="key">"isDeleted"</span>: <span class="bool">false</span>,
+      <span class="key">"province"</span>: {
+        <span class="key">"id"</span>: <span class="num">1</span>,
+        <span class="key">"name"</span>: <span class="str">"DKI Jakarta"</span>
+      },
+      <span class="key">"createdBy"</span>: <span class="str">"admin"</span>,
+      <span class="key">"createdAt"</span>: <span class="str">"2026-10-03T10:00:00"</span>,
+      <span class="key">"updatedBy"</span>: <span class="null">null</span>,
+      <span class="key">"updatedAt"</span>: <span class="str">"2026-10-03T10:00:00"</span>,
+      <span class="key">"deletedAt"</span>: <span class="null">null</span>
+    }
+  ]
+}</pre>
+  </div>
+</div>
+
+<!-- PUT branches -->
+<div class="endpoint-card">
+  <div class="endpoint-header">
+    <span class="method PUT">PUT</span>
+    <span class="endpoint-path">/api/branches/{id}</span>
+  </div>
+  <div class="endpoint-desc">
+    Updates an existing branch's name and/or active status. Only works on branches that have
+    not been soft-deleted. Automatically records the authenticated user in <code>updated_by</code>.
+  </div>
+  <div class="endpoint-body">
+    <div class="section-label">Path Parameters</div>
+    <table>
+      <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>id</code></td><td>Integer</td><td class="required">Yes</td><td>Branch ID to update</td></tr>
+      </tbody>
+    </table>
+
+    <div class="section-label">Request Body (JSON)</div>
+    <table>
+      <thead><tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>name</code></td><td>String</td><td class="required">Yes&gt;</td><td>New branch name</td></tr>
+        <tr><td><code>isActive</code></td><td>Boolean</td><td class="optional">No</td><td>Active status (defaults to current value if omitted)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="section-label">Sample Request</div>
+    <pre>{
+  <span class="key">"name"</span>: <span class="str">"Cabang Jakarta Pusat (Updated)"</span>,
+  <span class="key">"isActive"</span>: <span class="bool">true</span>
+}</pre>
+
+    <div class="section-label">Sample Response — 200 OK</div>
+    <pre>{
+  <span class="key">"status"</span>: <span class="num">200</span>,
+  <span class="key">"message"</span>: <span class="str">"Branch berhasil diupdate"</span>,
+  <span class="key">"data"</span>: {
+    <span class="key">"id"</span>: <span class="num">1</span>,
+    <span class="key">"name"</span>: <span class="str">"Cabang Jakarta Pusat (Updated)"</span>,
+    <span class="key">"isActive"</span>: <span class="bool">true</span>,
+    <span class="key">"isDeleted"</span>: <span class="bool">false</span>,
+    <span class="key">"province"</span>: { <span class="key">"id"</span>: <span class="num">1</span>, <span class="key">"name"</span>: <span class="str">"DKI Jakarta"</span> },
+    <span class="key">"updatedBy"</span>: <span class="str">"admin"</span>,
+    <span class="key">"updatedAt"</span>: <span class="str">"2026-10-03T17:10:00"</span>
+  }
+}</pre>
+
+    <div class="section-label">Error Response — 404 Not Found</div>
+    <pre>{
+  <span class="key">"status"</span>: <span class="num">404</span>,
+  <span class="key">"message"</span>: <span class="str">"Cabang tidak ditemukan!"</span>,
+  <span class="key">"data"</span>: <span class="null">null</span>
+}</pre>
+  </div>
+</div>
+
+<!-- DELETE branches -->
+<div class="endpoint-card">
+  <div class="endpoint-header">
+    <span class="method DELETE">DELETE</span>
+    <span class="endpoint-path">/api/branches/{id}</span>
+  </div>
+  <div class="endpoint-desc">
+    <strong>Soft-deletes</strong> a branch — data is NOT physically removed from the database.
+    Sets <code>is_deleted = true</code>, <code>is_active = false</code>, records <code>deleted_at</code>
+    timestamp, and sets <code>updated_by</code> to the authenticated user. Soft-deleted branches
+    (and their stores) no longer appear in any API responses.
+  </div>
+  <div class="endpoint-body">
+    <div class="section-label">Path Parameters</div>
+    <table>
+      <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>id</code></td><td>Integer</td><td class="required">Yes</td><td>Branch ID to soft-delete</td></tr>
+      </tbody>
+    </table>
+
+    <div class="section-label">Sample Response — 200 OK</div>
+    <pre>{
+  <span class="key">"status"</span>: <span class="num">200</span>,
+  <span class="key">"message"</span>: <span class="str">"Branch berhasil dihapus (soft-delete)"</span>,
+  <span class="key">"data"</span>: <span class="null">null</span>
+}</pre>
+
+    <div class="section-label">Error Response — 404 Not Found</div>
+    <pre>{
+  <span class="key">"status"</span>: <span class="num">404</span>,
+  <span class="key">"message"</span>: <span class="str">"Cabang tidak ditemukan!"</span>,
+  <span class="key">"data"</span>: <span class="null">null</span>
+}</pre>
+  </div>
+</div>
+
+
+<!-- ═══════════════════ 7. STORE ENDPOINTS ═══════════════════ -->
+<h2>7. Store Endpoints</h2>
+
+<!-- GET stores -->
+<div class="endpoint-card">
+  <div class="endpoint-header">
+    <span class="method GET">GET</span>
+    <span class="endpoint-path">/api/stores</span>
+  </div>
+  <div class="endpoint-desc">
+    Returns active, non-deleted stores. Supports optional province name filtering (case-insensitive partial match).
+    <strong>Whitelisted stores (<code>is_whitelisted = true</code>) always appear regardless of the province filter</strong>,
+    ensuring cross-province visibility for priority outlets.
+    Only stores belonging to active, non-deleted branches and provinces are included.
+  </div>
+  <div class="endpoint-body">
+    <div class="section-label">Query Parameters</div>
+    <table>
+      <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>province</code></td><td>String</td><td class="optional">No</td><td>Province name filter (partial match). Omit or leave empty to return all active stores.</td></tr>
+      </tbody>
+    </table>
+
+    <div class="section-label">Sample Request</div>
+    <pre>GET /api/stores?province=Jakarta</pre>
+
+    <div class="section-label">Sample Response — 200 OK</div>
+    <pre>{
+  <span class="key">"status"</span>: <span class="num">200</span>,
+  <span class="key">"message"</span>: <span class="str">"Berhasil mengambil data toko"</span>,
+  <span class="key">"data"</span>: [
+    {
+      <span class="key">"id"</span>: <span class="num">1</span>,
+      <span class="key">"name"</span>: <span class="str">"Indomaret Thamrin"</span>,
+      <span class="key">"isActive"</span>: <span class="bool">true</span>,
+      <span class="key">"isDeleted"</span>: <span class="bool">false</span>,
+      <span class="key">"isWhitelisted"</span>: <span class="bool">false</span>,
+      <span class="key">"branch"</span>: {
+        <span class="key">"id"</span>: <span class="num">1</span>,
+        <span class="key">"name"</span>: <span class="str">"Cabang Jakarta Pusat"</span>,
+        <span class="key">"province"</span>: { <span class="key">"id"</span>: <span class="num">1</span>, <span class="key">"name"</span>: <span class="str">"DKI Jakarta"</span> }
+      },
+      <span class="key">"createdAt"</span>: <span class="str">"2026-10-03T10:00:00"</span>,
+      <span class="key">"updatedBy"</span>: <span class="null">null</span>
+    },
+    {
+      <span class="key">"id"</span>: <span class="num">5</span>,
+      <span class="key">"name"</span>: <span class="str">"Indomaret Simpang Lima"</span>,
+      <span class="key">"isWhitelisted"</span>: <span class="bool">true</span>,
+      <span class="key">"branch"</span>: {
+        <span class="key">"name"</span>: <span class="str">"Cabang Semarang"</span>,
+        <span class="key">"province"</span>: { <span class="key">"name"</span>: <span class="str">"Jawa Tengah"</span> }
+      },
+      <span class="cmmt">// ^ whitelisted store from a different province — still returned</span>
+    }
+  ]
+}</pre>
+
+    <div class="section-label">Business Logic</div>
+    <p>The underlying JPQL query is:</p>
+    <pre><span class="cmmt">WHERE (province.name LIKE '%:provinceName%' OR store.isWhitelisted = true)
+  AND store.isActive = true  AND store.isDeleted = false
+  AND branch.isActive = true AND branch.isDeleted = false
+  AND province.isActive = true AND province.isDeleted = false</span></pre>
+  </div>
+</div>
+
+<!-- PUT whitelist -->
+<div class="endpoint-card">
+  <div class="endpoint-header">
+    <span class="method PUT">PUT</span>
+    <span class="endpoint-path">/api/stores/{id}/whitelist</span>
+  </div>
+  <div class="endpoint-desc">
+    Enables or disables the whitelist flag on a store. Whitelisted stores appear in all province
+    search results. Records the authenticated user in <code>updated_by</code>.
+  </div>
+  <div class="endpoint-body">
+    <div class="section-label">Path Parameters</div>
+    <table>
+      <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>id</code></td><td>Integer</td><td class="required">Yes</td><td>Store ID</td></tr>
+      </tbody>
+    </table>
+
+    <div class="section-label">Query Parameters</div>
+    <table>
+      <thead><tr><th>Parameter</th><th>Type</th><th>Required</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><code>status</code></td><td>Boolean</td><td class="required">Yes</td><td><code>true</code> to add to whitelist, <code>false</code> to remove</td></tr>
+      </tbody>
+    </table>
+
+    <div class="section-label">Sample Request — Enable Whitelist</div>
+    <pre>PUT /api/stores/3/whitelist?status=true</pre>
+
+    <div class="section-label">Sample Response — 200 OK</div>
+    <pre>{
+  <span class="key">"status"</span>: <span class="num">200</span>,
+  <span class="key">"message"</span>: <span class="str">"Status whitelist berhasil diubah"</span>,
+  <span class="key">"data"</span>: {
+    <span class="key">"id"</span>: <span class="num">3</span>,
+    <span class="key">"name"</span>: <span class="str">"Indomaret Kemang"</span>,
+    <span class="key">"isWhitelisted"</span>: <span class="bool">true</span>,
+    <span class="key">"updatedBy"</span>: <span class="str">"admin"</span>,
+    <span class="key">"updatedAt"</span>: <span class="str">"2026-10-03T17:15:00"</span>
+  }
+}</pre>
+
+    <div class="section-label">Error Response — 404 Not Found</div>
+    <pre>{
+  <span class="key">"status"</span>: <span class="num">404</span>,
+  <span class="key">"message"</span>: <span class="str">"Toko tidak ditemukan!"</span>,
+  <span class="key">"data"</span>: <span class="null">null</span>
+}</pre>
+  </div>
+</div>
+
+
+<!-- ═══════════════════ FOOTER ═══════════════════ -->
+<div class="footer">
+  <span></span>Caleb Dinoto — Backend Developer Technical Assignment
+  <span></span>Indomaret • Confidential
+</div>
+
+
+
+</body></html>
