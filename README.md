@@ -76,7 +76,47 @@ curl -u admin:password123 http://localhost:8080/api/stores
 
 ## API Documentation
 
+### Province Endpoints
+
+#### List All Provinces
+```
+GET /api/provinces
+```
+Returns all active and non-deleted provinces.
+
+**Response:**
+```json
+{
+  "status": 200,
+  "message": "Berhasil mengambil data provinsi",
+  "data": [
+    { "id": 1, "name": "DKI Jakarta", "isActive": true, ... }
+  ]
+}
+```
+
+---
+
 ### Branch Endpoints
+
+#### List All Branches
+```
+GET /api/branches
+```
+Returns all active and non-deleted branches, including their province.
+
+**Response:**
+```json
+{
+  "status": 200,
+  "message": "Berhasil mengambil data cabang",
+  "data": [
+    { "id": 1, "name": "Cabang Jakarta Pusat", "province": { "name": "DKI Jakarta" }, ... }
+  ]
+}
+```
+
+---
 
 #### Update Branch
 ```
@@ -190,7 +230,8 @@ src/main/java/com/indomaret/masterdata/
 ├── config/
 │   └── SecurityConfig.java          # Spring Security configuration
 ├── controller/
-│   ├── BranchController.java        # PUT, DELETE /api/branches
+│   ├── BranchController.java        # GET, PUT, DELETE /api/branches
+│   ├── ProvinceController.java      # GET /api/provinces
 │   └── StoreController.java         # GET /api/stores, PUT /api/stores/{id}/whitelist
 ├── dto/
 │   ├── ApiResponse.java             # Generic API response wrapper
@@ -205,6 +246,8 @@ src/main/java/com/indomaret/masterdata/
 │   ├── ProvinceRepository.java
 │   ├── StoreRepository.java
 │   └── UserRepository.java
+├── exception/
+│   └── GlobalExceptionHandler.java  # Returns 404 instead of 500 for not-found errors
 └── service/
     ├── BranchService.java
     ├── StoreService.java
